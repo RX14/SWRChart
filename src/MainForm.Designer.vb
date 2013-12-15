@@ -22,8 +22,8 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.Chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.StartButton = New System.Windows.Forms.Button()
         Me.StatusLabel = New System.Windows.Forms.Label()
@@ -35,17 +35,17 @@ Partial Class MainForm
         Me.Chart.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea1.AxisX.Title = "Frequency"
-        ChartArea1.AxisY.Title = "SWR"
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart.ChartAreas.Add(ChartArea1)
+        ChartArea3.AxisX.Title = "Frequency"
+        ChartArea3.AxisY.Title = "SWR"
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart.ChartAreas.Add(ChartArea3)
         Me.Chart.Location = New System.Drawing.Point(0, 0)
         Me.Chart.Name = "Chart"
-        Series1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline
-        Series1.Name = "Series1"
-        Me.Chart.Series.Add(Series1)
+        Series3.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
+        Series3.ChartArea = "ChartArea1"
+        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline
+        Series3.Name = "Series1"
+        Me.Chart.Series.Add(Series3)
         Me.Chart.Size = New System.Drawing.Size(300, 264)
         Me.Chart.TabIndex = 0
         Me.Chart.Text = "Chart1"
@@ -79,7 +79,8 @@ Partial Class MainForm
         Me.Controls.Add(Me.StartButton)
         Me.Controls.Add(Me.Chart)
         Me.Name = "MainForm"
-        Me.Text = "Form1"
+        Me.ShowIcon = False
+        Me.Text = "SWRGraph"
         CType(Me.Chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
