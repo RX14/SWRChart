@@ -28,7 +28,7 @@ Partial Class MainForm
         Me.Chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.StartButton = New System.Windows.Forms.Button()
         Me.StatusLabel = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.SettingsButton = New System.Windows.Forms.Button()
         CType(Me.Chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -72,25 +72,25 @@ Partial Class MainForm
         Me.StatusLabel.TabIndex = 2
         Me.StatusLabel.Text = "Idle"
         '
-        'Button1
+        'SettingsButton
         '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.ForeColor = System.Drawing.SystemColors.Control
-        Me.Button1.Location = New System.Drawing.Point(267, 269)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(27, 27)
-        Me.Button1.TabIndex = 3
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.SettingsButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.SettingsButton.BackgroundImage = CType(resources.GetObject("SettingsButton.BackgroundImage"), System.Drawing.Image)
+        Me.SettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.SettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.SettingsButton.ForeColor = System.Drawing.SystemColors.Control
+        Me.SettingsButton.Location = New System.Drawing.Point(267, 269)
+        Me.SettingsButton.Name = "SettingsButton"
+        Me.SettingsButton.Size = New System.Drawing.Size(27, 27)
+        Me.SettingsButton.TabIndex = 3
+        Me.SettingsButton.UseVisualStyleBackColor = True
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(300, 300)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.SettingsButton)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.StartButton)
         Me.Controls.Add(Me.Chart)
@@ -105,6 +105,6 @@ Partial Class MainForm
     Friend WithEvents Chart As System.Windows.Forms.DataVisualization.Charting.Chart
     Friend WithEvents StartButton As System.Windows.Forms.Button
     Friend WithEvents StatusLabel As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents SettingsButton As System.Windows.Forms.Button
 
 End Class
