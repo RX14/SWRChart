@@ -1,5 +1,7 @@
 ﻿Public Class MainForm
 
+    Public ComPort As String
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For Each sp As String In My.Computer.Ports.SerialPortNames
             SettingsDialog.ComPortSelection.Items.Add(sp)
@@ -11,10 +13,11 @@
     End Sub
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        DrawPoint(150000000, 2.0)
-        DrawPoint(155000000, 1.5)
-        DrawPoint(160000000, 1.1)
-        DrawPoint(165000000, 1.3)
-
+        If ComPort <> Nothing Then
+            OpenPort(ComPort)
+        Else
+            MsgBox("Oops!")
+        End If
     End Sub
+
 End Class
