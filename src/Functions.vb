@@ -17,6 +17,7 @@
             'Open comport
             com.Open()
             MainForm.StatusLabel.Text = "ComPort Opened... Reading Data"
+            MainForm.StartButton.Text = "Stop"
         Catch ex As Exception
             'Open Messagebox on failure
             MsgBox(ex.ToString)
