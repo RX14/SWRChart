@@ -19,6 +19,16 @@
     End Sub
 
     Private Sub com_DataReceived(ByVal sender As Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles com.DataReceived
-        Console.WriteLine("Com Recieved" + com.ReadLine)
+        Dim line As String = com.ReadLine
+        If Asc(line) < 90 And Asc(line) > 48 Then
+            'Console.WriteLine("DEBUG: COMDATA: " + line)
+            Dim lineSplit As String() = line.Split(",")
+            Dim X As Double = Convert.ToInt32(lineSplit(0))
+            Dim Y As Double = Convert.ToInt32(lineSplit(1))
+            Console.WriteLine("DEBUG: COMPARSEDDATA: " + X + ";" + Y)
+            DrawPoint(X, Y)
+        Else
+            Console.WriteLine("DEBUG: COMDEBUG: " + line)
+        End If
     End Sub
 End Module
