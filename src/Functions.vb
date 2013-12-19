@@ -46,7 +46,7 @@
             Dim X As Double = Convert.ToInt32(lineSplit(0))
             Dim Y As Double = Convert.ToInt32(lineSplit(1))
             Console.Out.WriteLine("DEBUG: COMPARSEDDATA: " + X.ToString + ";" + Y.ToString)
-            DrawPoint(13, 5)
+            'DrawPoint(13, 5)
         Else
             'Write other lines to console as debug datas
             Console.Out.WriteLine("DEBUG: COMDEBUG: " + line)

@@ -18,7 +18,7 @@
             'When you click the start button it opens the com port
             If ComPort <> Nothing Then
                 OpenPort(ComPort)
-                DrawPoint(12, 4)
+                'DrawPoint(12, 4)
             Else
                 MsgBox("Select a com port!")
             End If
