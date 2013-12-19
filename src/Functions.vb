@@ -25,6 +25,17 @@
 
     End Sub
 
+    Public Sub ClosePort()
+        Try
+            com.Close()
+            com = Nothing
+            MainForm.StatusLabel.Text = "Idle"
+            MainForm.StartButton.Text = "Start"
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+
     Private Sub com_DataReceived(ByVal sender As Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles com.DataReceived
         'Handles recieving COM data
         Dim line As String = com.ReadLine 'For storing the read line
@@ -34,8 +45,8 @@
             Dim lineSplit As String() = line.Split(",")
             Dim X As Double = Convert.ToInt32(lineSplit(0))
             Dim Y As Double = Convert.ToInt32(lineSplit(1))
-            Console.Out.WriteLine("DEBUG: COMPARSEDDATA: " + X + ";" + Y)
-            DrawPoint(X, Y)
+            Console.Out.WriteLine("DEBUG: COMPARSEDDATA: " + X.ToString + ";" + Y.ToString)
+            DrawPoint(13, 5)
         Else
             'Write other lines to console as debug datas
             Console.Out.WriteLine("DEBUG: COMDEBUG: " + line)

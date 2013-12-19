@@ -3,7 +3,7 @@
     Public ComPort As String
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Console.Out.WriteLine(vbNewLine + "STARTUP!" + vbNewLine + "------" + vbNewLine + TimeOfDay.ToLongTimeString)
+        'Console.Out.WriteLine(vbNewLine + "STARTUP!" + vbNewLine + "------" + vbNewLine + TimeOfDay.ToLongTimeString)
         For Each sp As String In My.Computer.Ports.SerialPortNames
             SettingsDialog.ComPortSelection.Items.Add(sp)
         Next
@@ -14,11 +14,16 @@
     End Sub
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        'When you click the start button it opens the com port
-        If ComPort <> Nothing Then
-            OpenPort(ComPort)
-        Else
-            MsgBox("Select a com port!")
+        If StartButton.Text = "Start" Then
+            'When you click the start button it opens the com port
+            If ComPort <> Nothing Then
+                OpenPort(ComPort)
+                DrawPoint(12, 4)
+            Else
+                MsgBox("Select a com port!")
+            End If
+        ElseIf StartButton.Text = "Stop" Then
+            ClosePort()
         End If
     End Sub
 
