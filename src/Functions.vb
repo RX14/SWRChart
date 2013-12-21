@@ -3,6 +3,7 @@
     Public Sub DrawPoint(X As Double, Y As Double, Optional SeriesRef As Integer = 0)
         'Draws a point on the graph given X + Y coordinates
         MainForm.Chart.Series.Item(SeriesRef).Points.AddXY(X, Y)
+        Console.Out.WriteLine("DEBUG: ChartPoints: " + MainForm.Chart.Series.Item(0).Points.Count().ToString)
     End Sub
 
     Public Sub OpenPort(ComPort As String)
@@ -46,9 +47,7 @@
             Dim X As Double = Convert.ToInt32(lineSplit(0))
             Dim Y As Double = Convert.ToInt32(lineSplit(1))
             Console.Out.WriteLine("DEBUG: COMPARSEDDATA: " + X.ToString + ";" + Y.ToString)
-            'DrawPoint(X, Y)
-            'MainForm.Chart.Series.Item(0).Points.AddXY(X, Y)
-            DrawPoint(13, 5)
+            MainForm.DoDrawPoint(X, Y)
         Else
             'Write other lines to console as debug datas
             Console.Out.WriteLine("DEBUG: COMDEBUG: " + line)

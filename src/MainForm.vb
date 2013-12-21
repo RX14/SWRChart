@@ -6,6 +6,7 @@
         'Console.Out.WriteLine(vbNewLine + "STARTUP!" + vbNewLine + "------" + vbNewLine + TimeOfDay.ToLongTimeString)
         For Each sp As String In My.Computer.Ports.SerialPortNames
             SettingsDialog.ComPortSelection.Items.Add(sp)
+            'DrawPoint(12, 14)
         Next
     End Sub
 
@@ -23,8 +24,12 @@
                 MsgBox("Select a com port!")
             End If
         ElseIf StartButton.Text = "Stop" Then
+            'Chart.Update()
             ClosePort()
         End If
     End Sub
 
+    Sub DoDrawPoint(X As Double, Y As Double)
+        Me.Invoke(Sub() DrawPoint(X, Y))
+    End Sub
 End Class
