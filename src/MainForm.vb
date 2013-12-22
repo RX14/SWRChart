@@ -6,7 +6,6 @@
         'Console.Out.WriteLine(vbNewLine + "STARTUP!" + vbNewLine + "------" + vbNewLine + TimeOfDay.ToLongTimeString)
         For Each sp As String In My.Computer.Ports.SerialPortNames
             SettingsDialog.ComPortSelection.Items.Add(sp)
-            'DrawPoint(12, 14)
         Next
     End Sub
 
