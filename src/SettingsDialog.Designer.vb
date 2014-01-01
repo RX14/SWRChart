@@ -33,6 +33,7 @@ Partial Class SettingsDialog
         Me.ComPortSelection.Location = New System.Drawing.Point(68, 12)
         Me.ComPortSelection.Name = "ComPortSelection"
         Me.ComPortSelection.Size = New System.Drawing.Size(121, 21)
+        Me.ComPortSelection.Sorted = True
         Me.ComPortSelection.TabIndex = 1
         '
         'Label1
