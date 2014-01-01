@@ -24,7 +24,6 @@ Partial Class MainForm
     Private Sub InitializeComponent()
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim DataPoint1 As System.Windows.Forms.DataVisualization.Charting.DataPoint = New System.Windows.Forms.DataVisualization.Charting.DataPoint(0.0R, 0.0R)
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.Chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.StartButton = New System.Windows.Forms.Button()
@@ -42,13 +41,15 @@ Partial Class MainForm
         ChartArea1.AxisY.Title = "SWR"
         ChartArea1.Name = "ChartArea1"
         Me.Chart.ChartAreas.Add(ChartArea1)
+        Me.Chart.ImeMode = System.Windows.Forms.ImeMode.[On]
         Me.Chart.Location = New System.Drawing.Point(0, 0)
         Me.Chart.Name = "Chart"
         Series1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
         Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
         Series1.Name = "Series1"
-        Series1.Points.Add(DataPoint1)
+        Series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
         Me.Chart.Series.Add(Series1)
         Me.Chart.Size = New System.Drawing.Size(300, 264)
         Me.Chart.TabIndex = 0

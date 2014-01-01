@@ -2,6 +2,7 @@
 Module Functions
     Public Sub ClosePort()
         Try
+            consolePrint("Stopping")
             MainForm.StartButton.Text = "Stopping"
             MainForm.StartButton.Refresh()
             'Safe stop of BackgroundWorker
@@ -10,6 +11,7 @@ Module Functions
             System.Threading.Thread.Sleep(2000)
             MainForm.com.Close()
             'Reset state
+            consolePrint("Idle")
             MainForm.StatusLabel.Text = "Idle"
             MainForm.StartButton.Text = "Start"
         Catch ex As Exception
@@ -36,6 +38,7 @@ Module Functions
             MainForm.com.Open()
             'Run BackgroundWorker to parse incoming COM data
             MainForm.bw.RunWorkerAsync()
+            consolePrint("Opened Port")
             MainForm.StatusLabel.Text = "ComPort Opened... Reading Data"
             MainForm.StartButton.Text = "Stop"
         Catch ex As Exception
@@ -43,5 +46,15 @@ Module Functions
             MsgBox(ex.ToString)
         End Try
 
+    End Sub
+    Public Sub consolePrint(text As String, Optional debug As Boolean = False)
+        'If the Debugger is attached AND it is a debug message then:
+        If Debugger.IsAttached And debug = True Then
+            Console.Out.WriteLine("DEBUG: " + text)
+        End If
+        'If it is not a debug message then:
+        If debug = False Then
+            Console.Out.WriteLine("STATUS: " + text)
+        End If
     End Sub
  End Module

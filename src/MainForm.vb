@@ -9,7 +9,7 @@ Public Class MainForm
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Startup Stuff...
-        Console.Out.WriteLine(vbNewLine + "STARTUP!" + vbNewLine + "------" + vbNewLine + TimeOfDay.ToLongTimeString)
+        consolePrint("Starting @ " + TimeOfDay.ToLongDateString)
     End Sub
 
     Private Sub SettingsButton_Click(sender As Object, e As EventArgs) Handles SettingsButton.Click
@@ -37,13 +37,13 @@ Public Class MainForm
     Public Sub DrawPoint(X As Double, Y As Double, Optional SeriesRef As Integer = 0)
         If Me.Chart.InvokeRequired Then
             'If you need to invoke then invoke.
-            Console.Out.WriteLine("DEBUG: Invoked")
+            consolePrint("DrawPoint(" + X.ToString + ", " + Y.ToString + ") Invoked", True)
             Me.Chart.Invoke(New DrawPointInvoker(AddressOf DrawPoint), X, Y)
         Else
             'Add the points
-            Console.Out.WriteLine("DEBUG: HANDLE: " + Me.Chart.IsHandleCreated.ToString + "; " + Me.Chart.Handle.ToString)
+            consolePrint("HANDLE: " + Me.Chart.IsHandleCreated.ToString + "; " + Me.Chart.Handle.ToString, True)
             Me.Chart.Series(SeriesRef).Points.AddXY(X, Y)
-            Console.Out.WriteLine("DEBUG: ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString)
+            consolePrint("ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString, True)
         End If
     End Sub
 
@@ -57,25 +57,24 @@ Public Class MainForm
                 Dim Line As String = com.ReadLine()
                 'If the first character is a number then...
                 If Asc(Line(0)) < 58 And Asc(Line(0)) > 47 Then
-                    Console.Out.WriteLine("DEBUG: COMDATA: " + Line)
+                    consolePrint("COMDATA: " + Line, True)
                     Dim lineSplit As String() = Line.Split(",")
                     'Check line count
                     If Line.Count > 3 Then
-                        Console.Out.WriteLine("line(0)=" + lineSplit(0) + "; line(1)=" + lineSplit(1) + "l line(2)=" + lineSplit(2))
-                        x = Convert.ToInt32(lineSplit(0) / 1000000)
-                        y = Convert.ToInt32(Mid(lineSplit(1), 5))
-                        Console.Out.WriteLine("DEBUG: COMPARSEDDATA: " + x.ToString + ";" + y.ToString)
+                        x = Convert.ToDouble(lineSplit(0) / 1000000)
+                        y = Convert.ToDouble(Mid(lineSplit(1), 5))
+                        consolePrint("COMPARSEDDATA: " + x.ToString + ";" + y.ToString, True)
                         DrawPoint(x, y)
                     Else
-                        Console.Out.WriteLine("Parse Error")
+                        consolePrint("ERROR: Parse Error")
                     End If
                 Else
                     'Write other lines to console as debug data
-                    Console.Out.WriteLine("DEBUG: COMDEBUG: " + Line)
+                    consolePrint("UNPARSED: " + Line)
                 End If
             Catch generatedExceptionName As TimeoutException
                 'Catch timeouts
-                Console.Out.WriteLine("Timeout")
+                consolePrint("COM Timeout")
             End Try
         End While
     End Sub

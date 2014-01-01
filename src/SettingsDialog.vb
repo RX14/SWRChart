@@ -12,6 +12,6 @@
             ComPortSelection.Items.Add(sp)
         Next
         ComPortSelection.SelectedText = My.Settings.ComPort
-        Console.Out.WriteLine("SettingsLoad")
+        consolePrint("Load Settings")
     End Sub
 End Class
