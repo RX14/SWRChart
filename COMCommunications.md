@@ -41,4 +41,4 @@ To PC
 
 Send Data for Freq
 ------
-`D <frequency in Hz> <SWR> <Voltage> <Resistance>`
+`D <frequency in Hz> <Voltage> <Resistance>`
