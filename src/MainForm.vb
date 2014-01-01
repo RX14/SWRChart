@@ -79,4 +79,8 @@ Public Class MainForm
         End While
     End Sub
 #End Region
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles CustomPresetButton.Click
+
+    End Sub
 End Class
