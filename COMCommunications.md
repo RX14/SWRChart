@@ -53,7 +53,7 @@ To PC
 
 Send Data for Freq
 ------
-`D <frequency in Hz> <Voltage> <Resistance>`
+`D <frequency in Hz> <Voltage1> <Voltage2>`
 
 Return Preset
 ------
