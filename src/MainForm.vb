@@ -32,7 +32,7 @@ Public Class MainForm
     End Sub
 
     Private Sub CustomPresetButton_Click(sender As Object, e As EventArgs) Handles CustomPresetButton.Click
-
+        CustomPresetsDialog.Show()
     End Sub
 
     'Functions that HAVE to be in the MainForm to work...
