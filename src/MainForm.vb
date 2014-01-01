@@ -1,13 +1,14 @@
-﻿Public Class MainForm
+﻿Imports System.ComponentModel
 
-    Public ComPort As String = "Com10"
-
-    Delegate Sub DrawPoint() '(x As Double, y As Double)
-    Public DrawPointDelegate As DrawPoint
+Public Class MainForm
+    'Public Variables etc.
+    Public bw As BackgroundWorker = New BackgroundWorker
+    Public Delegate Sub DrawPointInvoker(X As Double, Y As Double)
+    Public WithEvents com As New IO.Ports.SerialPort
+    Public ComPort As String
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Console.Out.WriteLine(vbNewLine + "STARTUP!" + vbNewLine + "------" + vbNewLine + TimeOfDay.ToLongTimeString)
-        DrawPointDelegate = New DrawPoint(AddressOf DoDrawPoint)
     End Sub
 
     Private Sub SettingsButton_Click(sender As Object, e As EventArgs) Handles SettingsButton.Click
@@ -19,33 +20,53 @@
             'When you click the start button it opens the com port
             If ComPort <> Nothing Then
                 OpenPort(ComPort)
-                'DrawPoint(12, 4)
             Else
                 MsgBox("Select a com port!")
             End If
         ElseIf StartButton.Text = "Stop" Then
-            'Chart.Update()
             ClosePort()
         End If
     End Sub
-
-    Public Sub DoDrawPoint() '(X As Double, Y As Double)
-        'Chart.Update()
-        Chart.Series(0).Points.AddXY(X, Y)
-        Console.Out.WriteLine("DEBUG: ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString)
-        Label1.Text = Chart.Series(0).Points.Count.ToString
-        'Chart.ResetAutoValues()
+#Region "Functions"
+    Public Sub DrawPoint(X As Double, Y As Double, Optional SeriesRef As Integer = 0)
+        If Me.Chart.InvokeRequired Then
+            Console.Out.WriteLine("Invoke")
+            Me.Chart.Invoke(New DrawPointInvoker(AddressOf DrawPoint), X, Y)
+        Else
+            'Draws a point on the graph given X + Y coordinates
+            Console.Out.WriteLine("DEBUG: HANDLE: " + Me.Chart.IsHandleCreated.ToString + "; " + Me.Chart.Handle.ToString)
+            Me.Chart.Series(SeriesRef).Points.AddXY(X, Y)
+            Console.Out.WriteLine("DEBUG: ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString)
+        End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'Label1.Text = Chart.Series(0).Points.Count.ToString
-        x = 2
-        y = 3
-        DoDrawPoint()
-    End Sub
+    Public Sub Read(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim x, y As Double
 
-    Protected Overrides Sub Finalize()
-        MyBase.Finalize()
+        While bw.CancellationPending = False
+            Try
+                Dim Line As String = com.ReadLine()
+                'If the first character is a number then...
+                If Asc(Line(0)) < 58 And Asc(Line(0)) > 47 Then
+                    Console.Out.WriteLine("DEBUG: COMDATA: " + Line)
+                    Dim lineSplit As String() = Line.Split(",")
+                    If Line.Count > 3 Then
+                        Console.Out.WriteLine("line(0)=" + lineSplit(0) + "; line(1)=" + lineSplit(1) + "l line(2)=" + lineSplit(2))
+                        x = Convert.ToInt32(lineSplit(0) / 1000000)
+                        y = Convert.ToInt32(Mid(lineSplit(1), 5))
+                        Console.Out.WriteLine("DEBUG: COMPARSEDDATA: " + x.ToString + ";" + y.ToString)
+                        DrawPoint(x, y)
+                    Else
+                        Console.Out.WriteLine("Parse Error")
+                    End If
+                Else
+                    'Write other lines to console as debug data
+                    Console.Out.WriteLine("DEBUG: COMDEBUG: " + Line)
+                End If
+            Catch generatedExceptionName As TimeoutException
+                Console.Out.WriteLine("Timeout")
+            End Try
+        End While
     End Sub
-
+#End Region
 End Class
