@@ -72,10 +72,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomPresets.Designer.vb">
-      <DependentUpon>CustomPresets.vb</DependentUpon>
+    <Compile Include="CustomPresetsDialog.Designer.vb">
+      <DependentUpon>CustomPresetsDialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="CustomPresets.vb">
+    <Compile Include="CustomPresetsDialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings.vb" />
@@ -110,8 +110,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CustomPresets.resx">
-      <DependentUpon>CustomPresets.vb</DependentUpon>
+    <EmbeddedResource Include="CustomPresetsDialog.resx">
+      <DependentUpon>CustomPresetsDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsDialog.resx">
       <DependentUpon>SettingsDialog.vb</DependentUpon>
