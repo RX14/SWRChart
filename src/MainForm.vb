@@ -17,15 +17,15 @@ Public Class MainForm
         SettingsDialog.Show()
     End Sub
 
-    Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        If StartButton.Text = "Start" Then
+    Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles ManualButton.Click
+        If ManualButton.Text = "Manual" Then
             'When you click the Start button it opens the com port
             If My.Settings.ComPort <> Nothing Then
                 OpenPort(My.Settings.ComPort)
             Else
                 MsgBox("Select a com port!")
             End If
-        ElseIf StartButton.Text = "Stop" Then
+        ElseIf ManualButton.Text = "Stop" Then
             'When you click the Stop button it closes the com port
             ClosePort()
         End If

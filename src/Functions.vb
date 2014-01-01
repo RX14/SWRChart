@@ -3,8 +3,8 @@ Module Functions
     Public Sub ClosePort()
         Try
             consolePrint("Stopping")
-            MainForm.StartButton.Text = "Stopping"
-            MainForm.StartButton.Refresh()
+            MainForm.ManualButton.Text = "Stopping"
+            MainForm.ManualButton.Refresh()
             'Safe stop of BackgroundWorker
             MainForm.bw.CancelAsync()
             'Wait long enough for the BackgroundWorker to finish
@@ -13,7 +13,7 @@ Module Functions
             'Reset state
             consolePrint("Idle")
             MainForm.StatusLabel.Text = "Idle"
-            MainForm.StartButton.Text = "Start"
+            MainForm.ManualButton.Text = "Manual"
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
@@ -40,7 +40,7 @@ Module Functions
             MainForm.bw.RunWorkerAsync()
             consolePrint("Opened Port")
             MainForm.StatusLabel.Text = "ComPort Opened... Reading Data"
-            MainForm.StartButton.Text = "Stop"
+            MainForm.ManualButton.Text = "Stop"
         Catch ex As Exception
             'Open Messagebox on failure
             MsgBox(ex.ToString)
