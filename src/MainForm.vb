@@ -17,7 +17,7 @@ Public Class MainForm
         SettingsDialog.Show()
     End Sub
 
-    Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles ManualButton.Click
+    Private Sub ManualButton_Click(sender As Object, e As EventArgs) Handles ManualButton.Click
         If ManualButton.Text = "Manual" Then
             'When you click the Start button it opens the com port
             If My.Settings.ComPort <> Nothing Then
@@ -29,6 +29,10 @@ Public Class MainForm
             'When you click the Stop button it closes the com port
             ClosePort()
         End If
+    End Sub
+
+    Private Sub CustomPresetButton_Click(sender As Object, e As EventArgs) Handles CustomPresetButton.Click
+
     End Sub
 
     'Functions that HAVE to be in the MainForm to work...
@@ -79,8 +83,4 @@ Public Class MainForm
         End While
     End Sub
 #End Region
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles CustomPresetButton.Click
-
-    End Sub
 End Class
