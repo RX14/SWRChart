@@ -36,9 +36,42 @@ Start Scan
 ------
 `S`
 
+Return Presets
+------
+`PR`
+
+Send Custom Preset
+------
+`SP<name> <start frequency in Hz> <stop frequency in Hz>`
+
 To PC
 ======
 
 Send Data for Freq
 ------
 `D <frequency in Hz> <Voltage> <Resistance>`
+
+Return Preset
+------
+`PR<index> <name> <start frequency in Hz> <stop frequency in Hz>`
+
+Examples
+======
+
+Start Scan
+------
+PC:`L 3500000`
+PC:`H 3800000`
+PC:`I 5000`
+PC:`S`
+
+Get Presets
+------
+PC:`PR`
+Anylyser:`PR0 80m 3500000 3800000`
+etc. For all presets
+
+Send Custom Preset
+-------
+PC:`SP60m 5258500 5406500`
+Anylyser:`PR12 60m 5258500 5406500`
