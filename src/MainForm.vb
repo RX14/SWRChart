@@ -83,4 +83,10 @@ Public Class MainForm
         End While
     End Sub
 #End Region
+
+    Private Sub ClearGraph_Click(sender As Object, e As EventArgs) Handles ClearGraph.Click
+        For Each i In Chart.Series
+            Chart.Series(i.Name.ToString).Points.Clear()
+        Next
+    End Sub
 End Class
