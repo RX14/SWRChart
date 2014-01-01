@@ -4,10 +4,12 @@ Module Functions
         Try
             MainForm.StartButton.Text = "Stopping"
             MainForm.StartButton.Refresh()
+            'Safe stop of BackgroundWorker
             MainForm.bw.CancelAsync()
-            'wait long enough for the timeout to take place
+            'Wait long enough for the BackgroundWorker to finish
             System.Threading.Thread.Sleep(2000)
             MainForm.com.Close()
+            'Reset state
             MainForm.StatusLabel.Text = "Idle"
             MainForm.StartButton.Text = "Start"
         Catch ex As Exception
@@ -18,6 +20,7 @@ Module Functions
     Public Sub OpenPort(ComPort As String)
         'Opens port when given the name of a COM port
         MainForm.bw.WorkerSupportsCancellation = True
+        'Sets the work for the BackgroundWorker
         AddHandler MainForm.bw.DoWork, AddressOf MainForm.Read
 
         Try
@@ -31,6 +34,7 @@ Module Functions
             'MainForm.com.WriteTimeout = 1000
             'Open comport
             MainForm.com.Open()
+            'Run BackgroundWorker to parse incoming COM data
             MainForm.bw.RunWorkerAsync()
             MainForm.StatusLabel.Text = "ComPort Opened... Reading Data"
             MainForm.StartButton.Text = "Stop"
