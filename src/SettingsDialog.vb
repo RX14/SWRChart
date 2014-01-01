@@ -1,7 +1,7 @@
 ﻿Public Class SettingsDialog
 
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
-        MainForm.ComPort = ComPortSelection.Text
+        My.Settings.ComPort = ComPortSelection.Text
         Me.Close()
     End Sub
 
@@ -11,6 +11,7 @@
             'If Len(sp) = 4 Then sp = "COM " + Mid(sp, 4)
             ComPortSelection.Items.Add(sp)
         Next
+        ComPortSelection.SelectedText = My.Settings.ComPort
         Console.Out.WriteLine("SettingsLoad")
     End Sub
 End Class

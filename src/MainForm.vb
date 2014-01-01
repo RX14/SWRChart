@@ -6,7 +6,6 @@ Public Class MainForm
     'For invoking DrawPoint properly...
     Public Delegate Sub DrawPointInvoker(X As Double, Y As Double)
     Public WithEvents com As New IO.Ports.SerialPort
-    Public ComPort As String
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Startup Stuff...
@@ -21,8 +20,8 @@ Public Class MainForm
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         If StartButton.Text = "Start" Then
             'When you click the Start button it opens the com port
-            If ComPort <> Nothing Then
-                OpenPort(ComPort)
+            If My.Settings.ComPort <> Nothing Then
+                OpenPort(My.Settings.ComPort)
             Else
                 MsgBox("Select a com port!")
             End If
