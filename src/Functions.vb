@@ -58,39 +58,49 @@ Module Functions
         End If
     End Sub
     Public Sub Parse(input As String)
-        'Basic parse variables
-        Dim P_command As String
-        Dim P_params As String()
+        consolePrint("PARSING: " + input, True)
+        Try
+            'Basic parse variables
+            Dim P_command As String
+            Dim P_params As String()
 
-        'Parse variables for Data return
-        Dim P_freq As String
-        Dim P_V1 As Double
-        Dim P_V2 As Double
-        Dim P_Rx As Double
-        Dim P_SWR As Double
+            'Parse variables for Data return
+            Dim P_freq As String
+            Dim P_V1 As Double
+            Dim P_V2 As Double
+            Dim P_Rx As Double
+            Dim P_SWR As Double
 
-        'Parse variables for Preset return
+            'Parse variables for Preset return
 
-        'Split input into a command and some parameters
-        P_command = input.Substring(0, 2)
-        P_params = input.Substring(2).Split(" ")
+            'Split input into a command and some parameters
+            P_command = input.Substring(0, 2)
+            P_params = input.Substring(2).Split(" ")
 
-        '"Send Data for Freq" Command
-        If P_command = "D " Then
-            P_freq = P_params(0)
-            P_V1 = P_params(1)
-            P_V2 = P_params(2)
-            P_Rx = (P_V2 * 50) / ((2 * P_V1) - P_V2)
-            If P_Rx >= 50 Then
-                P_SWR = P_Rx / 50
+            '"Send Data for Freq" Command
+            If P_command = "D " Then
+                P_freq = P_params(0)
+                P_V1 = P_params(1)
+                P_V2 = P_params(2)
+                P_Rx = (P_V2 * 50) / ((2 * P_V1) - P_V2)
+                If P_Rx >= 50 Then
+                    P_SWR = P_Rx / 50
+                Else
+                    P_SWR = 50 / P_Rx
+                End If
+                consolePrint("PARSED: SWR: " + P_SWR + " Freq: " + P_freq, True)
+                MainForm.DrawPoint(P_freq, P_SWR)
+            ElseIf P_command = "PR" Then
+                Presets.Add(P_params)
+                consolePrint("Added preset " + P_params(0))
+                consolePrint("PRESET: " + String.Join(",", P_params))
+                updatePresets()
             Else
-                P_SWR = 50 / P_Rx
+                consolePrint("UNPARSED")
             End If
-            MainForm.DrawPoint(P_freq, P_SWR)
-        ElseIf P_command = "PR" Then
-            Presets.Add(P_params)
-            updatePresets()
-        End If
+        Catch ex As Exception
+            consolePrint("ERROR: Parse Error")
+        End Try
     End Sub
     Private Sub updatePresets()
         MainForm.PresetsBox.Items.Clear()
