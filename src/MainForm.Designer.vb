@@ -210,7 +210,7 @@ Partial Class MainForm
         Me.PresetsBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PresetsBox.FormattingEnabled = True
-        Me.PresetsBox.Items.AddRange(New Object() {"This", "Needs", "To", "Be", "Populated"})
+        Me.PresetsBox.Items.AddRange(New Object() {"No Presets"})
         Me.PresetsBox.Location = New System.Drawing.Point(545, 121)
         Me.PresetsBox.Name = "PresetsBox"
         Me.PresetsBox.Size = New System.Drawing.Size(265, 251)
