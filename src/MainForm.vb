@@ -64,23 +64,7 @@ Public Class MainForm
             Try
                 'Read COM port line
                 Dim Line As String = com.ReadLine()
-                'If the first character is a number then...
-                If Asc(Line(0)) < 58 And Asc(Line(0)) > 47 Then
-                    consolePrint("COMDATA: " + Line, True)
-                    Dim lineSplit As String() = Line.Split(",")
-                    'Check line count
-                    If Line.Count > 3 Then
-                        x = Convert.ToDouble(lineSplit(0) / 1000000)
-                        y = Convert.ToDouble(Mid(lineSplit(1), 5))
-                        consolePrint("COMPARSEDDATA: " + x.ToString + ";" + y.ToString, True)
-                        DrawPoint(x, y)
-                    Else
-                        consolePrint("ERROR: Parse Error")
-                    End If
-                Else
-                    'Write other lines to console as debug data
-                    consolePrint("UNPARSED: " + Line)
-                End If
+                Parse(Line)
             Catch generatedExceptionName As TimeoutException
                 'Catch timeouts
                 consolePrint("COM Timeout")
