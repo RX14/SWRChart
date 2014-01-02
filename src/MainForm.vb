@@ -35,6 +35,12 @@ Public Class MainForm
         CustomPresetsDialog.Show()
     End Sub
 
+    Private Sub ClearGraph_Click(sender As Object, e As EventArgs) Handles ClearGraph.Click
+        For Each i In Chart.Series
+            Chart.Series(i.Name.ToString).Points.Clear()
+        Next
+    End Sub
+
     'Functions that HAVE to be in the MainForm to work...
 #Region "Functions"
     'Draws point on graph
@@ -50,7 +56,6 @@ Public Class MainForm
             consolePrint("ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString, True)
         End If
     End Sub
-
     Public Sub Read(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim x, y As Double
 
@@ -83,10 +88,4 @@ Public Class MainForm
         End While
     End Sub
 #End Region
-
-    Private Sub ClearGraph_Click(sender As Object, e As EventArgs) Handles ClearGraph.Click
-        For Each i In Chart.Series
-            Chart.Series(i.Name.ToString).Points.Clear()
-        Next
-    End Sub
 End Class

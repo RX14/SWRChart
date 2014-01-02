@@ -18,7 +18,6 @@ Module Functions
             MsgBox(ex.ToString)
         End Try
     End Sub
-
     Public Sub OpenPort(ComPort As String)
         'Opens port when given the name of a COM port
         MainForm.bw.WorkerSupportsCancellation = True
@@ -57,4 +56,34 @@ Module Functions
             Console.Out.WriteLine("STATUS: " + text)
         End If
     End Sub
- End Module
+    Public Sub Parse(input As String)
+        'Basic parse variables
+        Dim P_command As String
+        Dim P_params As String()
+
+        'Parse variables for Data return
+        Dim P_freq As String
+        Dim P_V1 As Double
+        Dim P_V2 As Double
+        Dim P_Rx As Double
+        Dim P_SWR As Double
+
+        'Split input into a command and some parameters
+        P_command = input.Substring(0, 2)
+        P_params = input.Substring(2).Split(" ")
+
+        '"Send Data for Freq" Command
+        If P_command = "D " Then
+            P_freq = P_params(0)
+            P_V1 = P_params(1)
+            P_V2 = P_params(2)
+            P_Rx = (P_V2 * 50) / ((2 * P_V1) - P_V2)
+            If P_Rx >= 50 Then
+                P_SWR = P_Rx / 50
+            Else
+                P_SWR = 50 / P_Rx
+            End If
+            MainForm.DrawPoint(P_freq, P_SWR)
+        End If
+    End Sub
+End Module
