@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Module Functions
+    Public Presets As New List(Of String())
     Public Sub ClosePort()
         Try
             consolePrint("Stopping")
@@ -68,6 +69,8 @@ Module Functions
         Dim P_Rx As Double
         Dim P_SWR As Double
 
+        'Parse variables for Preset return
+
         'Split input into a command and some parameters
         P_command = input.Substring(0, 2)
         P_params = input.Substring(2).Split(" ")
@@ -84,6 +87,15 @@ Module Functions
                 P_SWR = 50 / P_Rx
             End If
             MainForm.DrawPoint(P_freq, P_SWR)
+        ElseIf P_command = "PR" Then
+            Presets.Add(P_params)
+            updatePresets()
         End If
+    End Sub
+    Private Sub updatePresets()
+        MainForm.PresetsBox.Items.Clear()
+        For Each Preset In Presets
+            MainForm.PresetsBox.Items.Add(Preset(1))
+        Next
     End Sub
 End Module

@@ -22,8 +22,8 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.Chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.ManualButton = New System.Windows.Forms.Button()
@@ -40,7 +40,7 @@ Partial Class MainForm
         Me.ClearGraph = New System.Windows.Forms.Button()
         Me.V2Label = New System.Windows.Forms.Label()
         Me.V1Label = New System.Windows.Forms.Label()
-        Me.Presets = New System.Windows.Forms.ListBox()
+        Me.PresetsBox = New System.Windows.Forms.ListBox()
         Me.CustomPresetButton = New System.Windows.Forms.Button()
         CType(Me.Chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -50,20 +50,20 @@ Partial Class MainForm
         Me.Chart.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea2.AxisX.Title = "Frequency"
-        ChartArea2.AxisY.Title = "SWR"
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart.ChartAreas.Add(ChartArea2)
+        ChartArea1.AxisX.Title = "Frequency"
+        ChartArea1.AxisY.Title = "SWR"
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart.ChartAreas.Add(ChartArea1)
         Me.Chart.ImeMode = System.Windows.Forms.ImeMode.[On]
         Me.Chart.Location = New System.Drawing.Point(0, 0)
         Me.Chart.Name = "Chart"
-        Series2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
-        Series2.ChartArea = "ChartArea1"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series2.Name = "Series1"
-        Series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
-        Series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
-        Me.Chart.Series.Add(Series2)
+        Series1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
+        Series1.ChartArea = "ChartArea1"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series1.Name = "Series1"
+        Series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Me.Chart.Series.Add(Series1)
         Me.Chart.Size = New System.Drawing.Size(536, 471)
         Me.Chart.TabIndex = 0
         Me.Chart.Text = "Chart1"
@@ -205,16 +205,16 @@ Partial Class MainForm
         Me.V1Label.TabIndex = 14
         Me.V1Label.Text = "Voltage1: "
         '
-        'Presets
+        'PresetsBox
         '
-        Me.Presets.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.PresetsBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Presets.FormattingEnabled = True
-        Me.Presets.Items.AddRange(New Object() {"This", "Needs", "To", "Be", "Populated"})
-        Me.Presets.Location = New System.Drawing.Point(545, 121)
-        Me.Presets.Name = "Presets"
-        Me.Presets.Size = New System.Drawing.Size(265, 251)
-        Me.Presets.TabIndex = 15
+        Me.PresetsBox.FormattingEnabled = True
+        Me.PresetsBox.Items.AddRange(New Object() {"This", "Needs", "To", "Be", "Populated"})
+        Me.PresetsBox.Location = New System.Drawing.Point(545, 121)
+        Me.PresetsBox.Name = "PresetsBox"
+        Me.PresetsBox.Size = New System.Drawing.Size(265, 251)
+        Me.PresetsBox.TabIndex = 15
         '
         'CustomPresetButton
         '
@@ -235,7 +235,7 @@ Partial Class MainForm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(817, 471)
         Me.Controls.Add(Me.CustomPresetButton)
-        Me.Controls.Add(Me.Presets)
+        Me.Controls.Add(Me.PresetsBox)
         Me.Controls.Add(Me.V1Label)
         Me.Controls.Add(Me.V2Label)
         Me.Controls.Add(Me.ClearGraph)
@@ -274,7 +274,7 @@ Partial Class MainForm
     Friend WithEvents ClearGraph As System.Windows.Forms.Button
     Friend WithEvents V2Label As System.Windows.Forms.Label
     Friend WithEvents V1Label As System.Windows.Forms.Label
-    Friend WithEvents Presets As System.Windows.Forms.ListBox
+    Friend WithEvents PresetsBox As System.Windows.Forms.ListBox
     Friend WithEvents CustomPresetButton As System.Windows.Forms.Button
 
 End Class
