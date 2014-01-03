@@ -14,11 +14,11 @@ Set Frequency
 
 Oscillator ON
 ------
-`ON`
+`Y`
 
 Oscillator OFF
 ------
-`OF`
+`N`
 
 Set Start Frequency
 ------
@@ -38,15 +38,15 @@ Start Scan
 
 Stop Scan
 ------
-`SS`
+`X`
 
 Return Presets
 ------
-`PR`
+`P`
 
 Send Custom Preset
 ------
-`SP<name> <start frequency in Hz> <stop frequency in Hz>`
+`C<name> <start frequency in Hz> <stop frequency in Hz>`
 
 To PC
 ======
@@ -78,7 +78,7 @@ Anylyser:`SS`
 
 Get Presets
 ------
-PC:`PR`
+PC:`P`
 
 Anylyser:`PR0 80m 3500000 3800000`
 
