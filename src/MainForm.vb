@@ -41,7 +41,7 @@ Public Class MainForm
         Next
     End Sub
 
-    'Functions that HAVE to be in the MainForm to work...
+    'Functions that HAVE to be in the MainForm to work... Stupid threading...
 #Region "Functions"
     'Draws point on graph
     Public Sub DrawPoint(X As Double, Y As Double, Optional SeriesRef As Integer = 0)
