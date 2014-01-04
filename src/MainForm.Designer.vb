@@ -22,8 +22,8 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.Chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.ManualButton = New System.Windows.Forms.Button()
@@ -50,21 +50,22 @@ Partial Class MainForm
         Me.Chart.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea2.AxisX.Title = "Frequency"
-        ChartArea2.AxisY.Minimum = 1.0R
-        ChartArea2.AxisY.Title = "SWR"
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart.ChartAreas.Add(ChartArea2)
+        ChartArea1.AxisX.Title = "Frequency"
+        ChartArea1.AxisY.Maximum = 5.0R
+        ChartArea1.AxisY.Minimum = 1.0R
+        ChartArea1.AxisY.Title = "SWR"
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart.ChartAreas.Add(ChartArea1)
         Me.Chart.ImeMode = System.Windows.Forms.ImeMode.[On]
         Me.Chart.Location = New System.Drawing.Point(0, 0)
         Me.Chart.Name = "Chart"
-        Series2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
-        Series2.ChartArea = "ChartArea1"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series2.Name = "Series1"
-        Series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
-        Series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
-        Me.Chart.Series.Add(Series2)
+        Series1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
+        Series1.ChartArea = "ChartArea1"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series1.Name = "Series1"
+        Series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Me.Chart.Series.Add(Series1)
         Me.Chart.Size = New System.Drawing.Size(536, 525)
         Me.Chart.TabIndex = 0
         Me.Chart.Text = "Chart1"
@@ -215,7 +216,6 @@ Partial Class MainForm
         Me.Frequency.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Frequency.Location = New System.Drawing.Point(630, 12)
         Me.Frequency.Name = "Frequency"
-        Me.Frequency.ReadOnly = True
         Me.Frequency.Size = New System.Drawing.Size(181, 20)
         Me.Frequency.TabIndex = 17
         '

@@ -41,8 +41,27 @@ Public Class MainForm
         For Each i In Chart.Series
             Chart.Series(i.Name.ToString).Points.Clear()
         Next
+        Chart.ChartAreas(0).AxisX.Maximum = Double.NaN
+        Chart.ChartAreas(0).AxisX.Minimum = Double.NaN
     End Sub
 
+    Private Sub MainForm_Close(sender As Object, e As EventArgs) Handles Me.FormClosing
+        If com.IsOpen Then
+            com.WriteLine("X")
+            com.WriteLine("N")
+            ClosePort()
+        End If
+    End Sub
+
+    Private Sub ScanButton_Click(sender As Object, e As EventArgs) Handles ScanButton.Click
+        OpenPort(My.Settings.ComPort)
+        com.WriteLine("L " + StartFreq.Text)
+        com.WriteLine("H " + StopFreq.Text)
+        com.WriteLine("I " + ScanInterval.Text)
+        com.WriteLine("S")
+        Chart.ChartAreas(0).AxisX.Minimum = StartFreq.Text / 1000000
+        Chart.ChartAreas(0).AxisX.Maximum = StopFreq.Text / 1000000
+    End Sub
     'Functions that HAVE to be in the MainForm to work... Stupid threading...
 #Region "Functions"
     'Draws point on graph
@@ -55,14 +74,15 @@ Public Class MainForm
             'Add the points
             consolePrint("HANDLE: " + Me.Chart.IsHandleCreated.ToString + "; " + Me.Chart.Handle.ToString, True)
             Me.Chart.Series(SeriesRef).Points.AddXY(X, Y)
+
             'I cant be bothered to write another Delegate for the labels so I'm doin' it here!
             Me.SWRLabel.Text = "SWR: " + Y.ToString
-            Me.Frequency.Text = X.ToString
+            Me.Frequency.Text = X.ToString * 1000000
+
             consolePrint("ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString, True)
         End If
     End Sub
     Public Sub Read(ByVal sender As Object, ByVal e As DoWorkEventArgs)
-
         'While not being canceled.
         While bw.CancellationPending = False
             Try
@@ -88,6 +108,7 @@ Public Class MainForm
             Dim P_V2 As Double
             Dim P_Rx As Double
             Dim P_SWR As Double
+            Dim DataRecieved As List(Of String)
 
             'Parse variables for Preset return
 
@@ -107,7 +128,7 @@ Public Class MainForm
                     P_SWR = 50 / P_Rx
                 End If
                 consolePrint("PARSED: SWR: " + P_SWR.ToString + " Freq: " + P_freq.ToString, True)
-                DrawPoint(P_freq, P_SWR)
+                DrawPoint(P_freq / 1000000, P_SWR)
             ElseIf P_command = "PR" Then
                 Presets.Add(P_params)
                 consolePrint("Added preset " + P_params(0).ToString)
@@ -115,11 +136,12 @@ Public Class MainForm
                 updatePresets()
             Else
                 consolePrint("UNPARSED")
-            End If
+                End If
         Catch ex As Exception
             consolePrint("ERROR: Parse Error")
             consolePrint("Stacktrace: " + ex.ToString, True)
         End Try
     End Sub
 #End Region
+
 End Class
