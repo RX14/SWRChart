@@ -17,7 +17,7 @@ Oscillator ON
 ------
 `Y`
 
-Oscillator OFF
+Oscillator OFF/Stop Scan
 ------
 `N`
 
@@ -37,9 +37,6 @@ Start Scan
 ------
 `S`
 
-Stop Scan
-------
-`X`
 
 Return Presets
 ------
