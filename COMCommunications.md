@@ -60,6 +60,10 @@ Return Preset
 ------
 `P <index> <name> <start frequency in Hz> <stop frequency in Hz>`
 
+Scan Ended
+------
+`X`
+
 Examples
 ======
 
