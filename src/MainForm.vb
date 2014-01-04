@@ -55,6 +55,7 @@ Public Class MainForm
             Me.Chart.Series(SeriesRef).Points.AddXY(X, Y)
             'I cant be bothered to write another Delegate for the labels so I'm doin' it here!
             Me.SWRLabel.Text = "SWR: " + Y.ToString
+            Me.Frequency.Text = X.ToString
             consolePrint("ChartPoints: " + Chart.Series(0).Points.Count().ToString + "Last point:" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).XValue.ToString + ";" + Chart.Series(0).Points(Chart.Series(0).Points.Count - 1).YValues(0).ToString, True)
         End If
     End Sub
