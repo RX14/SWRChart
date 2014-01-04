@@ -19,14 +19,16 @@ Public Class MainForm
 
     Private Sub ManualButton_Click(sender As Object, e As EventArgs) Handles ManualButton.Click
         If ManualButton.Text = "Manual" Then
-            'When you click the Start button it opens the com port
+            'When you click the Manual button it opens the com port
             If My.Settings.ComPort <> Nothing Then
                 OpenPort(My.Settings.ComPort)
+                com.WriteLine("Y")
             Else
                 MsgBox("Select a com port!")
             End If
         ElseIf ManualButton.Text = "Stop" Then
             'When you click the Stop button it closes the com port
+            com.WriteLine("N")
             ClosePort()
         End If
     End Sub
