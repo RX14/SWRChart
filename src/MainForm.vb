@@ -128,7 +128,9 @@ Public Class MainForm
                     P_SWR = 50 / P_Rx
                 End If
                 consolePrint("PARSED: SWR: " + P_SWR.ToString + " Freq: " + P_freq.ToString, True)
-                DrawPoint(P_freq / 1000000, P_SWR)
+                If Not P_SWR > 20 Then
+                    DrawPoint(P_freq / 1000000, P_SWR)
+                End If
             ElseIf P_command = "PR" Then
                 Presets.Add(P_params)
                 consolePrint("Added preset " + P_params(0).ToString)
@@ -136,7 +138,7 @@ Public Class MainForm
                 updatePresets()
             Else
                 consolePrint("UNPARSED")
-                End If
+            End If
         Catch ex As Exception
             consolePrint("ERROR: Parse Error")
             consolePrint("Stacktrace: " + ex.ToString, True)
