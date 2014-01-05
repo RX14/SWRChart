@@ -47,20 +47,26 @@ Public Class MainForm
 
     Private Sub MainForm_Close(sender As Object, e As EventArgs) Handles Me.FormClosing
         If com.IsOpen Then
-            com.WriteLine("X")
             com.WriteLine("N")
             ClosePort()
         End If
     End Sub
 
     Private Sub ScanButton_Click(sender As Object, e As EventArgs) Handles ScanButton.Click
-        OpenPort(My.Settings.ComPort)
-        com.WriteLine("L " + StartFreq.Text)
-        com.WriteLine("H " + StopFreq.Text)
-        com.WriteLine("I " + ScanInterval.Text)
-        com.WriteLine("S")
-        Chart.ChartAreas(0).AxisX.Minimum = StartFreq.Text / 1000000
-        Chart.ChartAreas(0).AxisX.Maximum = StopFreq.Text / 1000000
+        If ScanButton.Text = "Start Scan" Then
+            OpenPort(My.Settings.ComPort)
+            com.WriteLine("L " + StartFreq.Text)
+            com.WriteLine("H " + StopFreq.Text)
+            com.WriteLine("I " + ScanInterval.Text)
+            com.WriteLine("S")
+            ScanButton.Text = "Stop Scan"
+            StatusLabel.Text = "Scanning"
+            Chart.ChartAreas(0).AxisX.Minimum = StartFreq.Text / 1000000
+            Chart.ChartAreas(0).AxisX.Maximum = StopFreq.Text / 1000000
+        ElseIf ScanButton.Text = "Stop Scan" Then
+            com.WriteLine("N")
+            ClosePort()
+        End If
     End Sub
     'Functions that HAVE to be in the MainForm to work... Stupid threading...
 #Region "Functions"
@@ -108,7 +114,6 @@ Public Class MainForm
             Dim P_V2 As Double
             Dim P_Rx As Double
             Dim P_SWR As Double
-            Dim DataRecieved As List(Of String)
 
             'Parse variables for Preset return
 
@@ -136,6 +141,11 @@ Public Class MainForm
                 consolePrint("Added preset " + P_params(0).ToString)
                 consolePrint("PRESET: " + String.Join(",", P_params))
                 updatePresets()
+            ElseIf P_command = "X" Then
+                consolePrint("Scan Ended")
+                com.WriteLine("N")
+                ScanButton.Text = "Start Scan"
+                StatusLabel.Text = "Idle"
             Else
                 consolePrint("UNPARSED")
             End If
