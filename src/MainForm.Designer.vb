@@ -22,8 +22,8 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.Chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.ManualButton = New System.Windows.Forms.Button()
@@ -42,7 +42,9 @@ Partial Class MainForm
         Me.CustomPresetButton = New System.Windows.Forms.Button()
         Me.Frequency = New System.Windows.Forms.TextBox()
         Me.FrequencyLabel = New System.Windows.Forms.Label()
+        Me.SWRZoom = New System.Windows.Forms.TrackBar()
         CType(Me.Chart, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SWRZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Chart
@@ -50,22 +52,22 @@ Partial Class MainForm
         Me.Chart.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea1.AxisX.Title = "Frequency"
-        ChartArea1.AxisY.Maximum = 5.0R
-        ChartArea1.AxisY.Minimum = 1.0R
-        ChartArea1.AxisY.Title = "SWR"
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart.ChartAreas.Add(ChartArea1)
+        ChartArea2.AxisX.Title = "Frequency"
+        ChartArea2.AxisY.Maximum = 5.0R
+        ChartArea2.AxisY.Minimum = 1.0R
+        ChartArea2.AxisY.Title = "SWR"
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart.ChartAreas.Add(ChartArea2)
         Me.Chart.ImeMode = System.Windows.Forms.ImeMode.[On]
         Me.Chart.Location = New System.Drawing.Point(0, 0)
         Me.Chart.Name = "Chart"
-        Series1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series1.Name = "Series1"
-        Series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
-        Series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
-        Me.Chart.Series.Add(Series1)
+        Series2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight
+        Series2.ChartArea = "ChartArea1"
+        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series2.Name = "Series1"
+        Series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Double]
+        Me.Chart.Series.Add(Series2)
         Me.Chart.Size = New System.Drawing.Size(536, 525)
         Me.Chart.TabIndex = 0
         Me.Chart.Text = "Chart1"
@@ -229,11 +231,29 @@ Partial Class MainForm
         Me.FrequencyLabel.TabIndex = 18
         Me.FrequencyLabel.Text = "Frequency"
         '
+        'SWRZoom
+        '
+        Me.SWRZoom.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.SWRZoom.BackColor = System.Drawing.Color.White
+        Me.SWRZoom.LargeChange = 10
+        Me.SWRZoom.Location = New System.Drawing.Point(0, 0)
+        Me.SWRZoom.Maximum = 50
+        Me.SWRZoom.Minimum = 15
+        Me.SWRZoom.Name = "SWRZoom"
+        Me.SWRZoom.Orientation = System.Windows.Forms.Orientation.Vertical
+        Me.SWRZoom.Size = New System.Drawing.Size(42, 525)
+        Me.SWRZoom.SmallChange = 5
+        Me.SWRZoom.TabIndex = 19
+        Me.SWRZoom.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.SWRZoom.Value = 50
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(817, 525)
+        Me.Controls.Add(Me.SWRZoom)
         Me.Controls.Add(Me.FrequencyLabel)
         Me.Controls.Add(Me.Frequency)
         Me.Controls.Add(Me.CustomPresetButton)
@@ -255,6 +275,7 @@ Partial Class MainForm
         Me.ShowIcon = False
         Me.Text = "SWRChart"
         CType(Me.Chart, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SWRZoom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -276,5 +297,6 @@ Partial Class MainForm
     Friend WithEvents CustomPresetButton As System.Windows.Forms.Button
     Friend WithEvents Frequency As System.Windows.Forms.TextBox
     Friend WithEvents FrequencyLabel As System.Windows.Forms.Label
+    Friend WithEvents SWRZoom As System.Windows.Forms.TrackBar
 
 End Class

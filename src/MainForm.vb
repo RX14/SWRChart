@@ -68,6 +68,11 @@ Public Class MainForm
             ClosePort()
         End If
     End Sub
+
+    Private Sub SWRZoom_ValueChanged(sender As Object, e As EventArgs) Handles SWRZoom.ValueChanged
+        Chart.ChartAreas(0).AxisY.Maximum = (SWRZoom.Value / 10)
+    End Sub
+
     'Functions that HAVE to be in the MainForm to work... Stupid threading...
 #Region "Functions"
     'Draws point on graph
@@ -155,5 +160,6 @@ Public Class MainForm
         End Try
     End Sub
 #End Region
+
 
 End Class
