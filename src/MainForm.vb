@@ -131,7 +131,7 @@ Public Class MainForm
                 P_freq = P_params(0)
                 P_V1 = P_params(1)
                 P_V2 = P_params(2)
-                P_Rx = (P_V2 * 50) / ((2 * P_V1) - P_V2)
+                P_Rx = (P_V2 * 50) / (P_V1 - P_V2)
                 If P_Rx >= 50 Then
                     P_SWR = P_Rx / 50
                 Else
