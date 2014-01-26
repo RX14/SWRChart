@@ -7,14 +7,17 @@ Module Functions
             MainForm.ManualButton.Text = "Stopping"
             MainForm.ManualButton.Refresh()
             'Safe stop of BackgroundWorker
+            Debug.Print("ClosePort - bw busy state=" + MainForm.bw.IsBusy.ToString)
+            MainForm.bw.WorkerSupportsCancellation = True
             MainForm.bw.CancelAsync()
             'Wait long enough for the BackgroundWorker to finish
-            System.Threading.Thread.Sleep(2000)
+            System.Threading.Thread.Sleep(3000)
             MainForm.com.Close()
             'Reset state
             consolePrint("Idle")
             MainForm.StatusLabel.Text = "Idle"
             MainForm.ManualButton.Text = "Manual"
+            MainForm.ScanButton.Text = "Start Scan"
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
@@ -37,6 +40,7 @@ Module Functions
             'Open comport
             MainForm.com.Open()
             'Run BackgroundWorker to parse incoming COM data
+            MainForm.bw.WorkerSupportsCancellation = True
             MainForm.bw.RunWorkerAsync()
             consolePrint("Opened Port")
             MainForm.StatusLabel.Text = "ComPort Opened... Reading Data"
