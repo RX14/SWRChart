@@ -82,12 +82,12 @@ Get Presets
 ------
 PC:`P`
 
-Anylyser:`P 0 80m 3500000 3800000`
+Anylyser:`P 0 3500000 3800000 20000`        (Start, Finish, Increment)
 
 etc. For all presets
 
 Send Custom Preset
 -------
-PC:`C 60m 5258500 5406500`
+PC:`C 12 5258500 5406500 20000`
 
-Anylyser:`P 12 60m 5258500 5406500`
+Anylyser:`P 12 5258500 5406500 20000`

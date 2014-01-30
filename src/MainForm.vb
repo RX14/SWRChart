@@ -6,6 +6,9 @@ Public Class MainForm
     'For invoking DrawPoint properly...
     Public Delegate Sub DrawPointInvoker(X As Double, Y As Double, SeriesRef As Integer)
     Public WithEvents com As New IO.Ports.SerialPort
+    ' Create new PrintDocument 
+    Dim WithEvents pd As New System.Drawing.Printing.PrintDocument()
+
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Startup Stuff...
@@ -215,6 +218,7 @@ Public Class MainForm
         Try
             If Not com.IsOpen Then
                 If My.Settings.ComPort <> Nothing Then
+                    ' Add code to check COM port exists before trying to open.
                     OpenPort(My.Settings.ComPort)
                 Else
                     MsgBox("Select a com port!")
@@ -232,5 +236,19 @@ Public Class MainForm
 
 
 
+
+    Private Sub PrintButton_Click(sender As Object, e As EventArgs) Handles PrintButton.Click
+        AddHandler pd.PrintPage, AddressOf pd_PrintPage
+
+        Chart.Printing.PrintDocument = pd ' this enables the adding of other material to the page on which the chart is printed
+        Chart.Printing.Print(True) ' True/False -> show print dialog
+
+    End Sub
+
+    Private Sub pd_PrintPage(sender As System.Object, e As System.Drawing.Printing.PrintPageEventArgs) Handles pd.PrintPage
+        Chart.Printing.PrintPaint(e.Graphics, New Rectangle(0, 0, Chart.Width, Chart.Height)) ' draw the chart
+        Dim s As String = vbCrLf & vbCrLf & "This is where you add the results and stuff"
+        e.Graphics.DrawString(s, Me.Font, Brushes.Black, New Point(0, Chart.Height + 2)) ' draw the rest
+    End Sub
 
 End Class

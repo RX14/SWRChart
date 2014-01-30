@@ -44,6 +44,7 @@ Partial Class MainForm
         Me.Frequency = New System.Windows.Forms.TextBox()
         Me.FrequencyLabel = New System.Windows.Forms.Label()
         Me.SWRZoom = New System.Windows.Forms.TrackBar()
+        Me.PrintButton = New System.Windows.Forms.Button()
         CType(Me.Chart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SWRZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -256,11 +257,22 @@ Partial Class MainForm
         Me.SWRZoom.TickStyle = System.Windows.Forms.TickStyle.None
         Me.SWRZoom.Value = 50
         '
+        'PrintButton
+        '
+        Me.PrintButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PrintButton.Location = New System.Drawing.Point(646, 436)
+        Me.PrintButton.Name = "PrintButton"
+        Me.PrintButton.Size = New System.Drawing.Size(75, 23)
+        Me.PrintButton.TabIndex = 20
+        Me.PrintButton.Text = "Print Graph"
+        Me.PrintButton.UseVisualStyleBackColor = True
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(817, 525)
+        Me.Controls.Add(Me.PrintButton)
         Me.Controls.Add(Me.SWRZoom)
         Me.Controls.Add(Me.FrequencyLabel)
         Me.Controls.Add(Me.Frequency)
@@ -306,5 +318,6 @@ Partial Class MainForm
     Friend WithEvents Frequency As System.Windows.Forms.TextBox
     Friend WithEvents FrequencyLabel As System.Windows.Forms.Label
     Friend WithEvents SWRZoom As System.Windows.Forms.TrackBar
+    Friend WithEvents PrintButton As System.Windows.Forms.Button
 
 End Class
