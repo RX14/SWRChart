@@ -5,9 +5,11 @@ Public Class MainForm
     Public bw As BackgroundWorker = New BackgroundWorker
     'For invoking DrawPoint properly...
     Public Delegate Sub DrawPointInvoker(X As Double, Y As Double, SeriesRef As Integer)
+    Public Delegate Sub setTooltipsInvoker()
     Public WithEvents com As New IO.Ports.SerialPort
     ' Create new PrintDocument 
     Dim WithEvents pd As New System.Drawing.Printing.PrintDocument()
+    Dim tooltipsSet As Boolean = False
 
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -105,22 +107,60 @@ Public Class MainForm
 #Region "Functions"
     'Draws point on graph
     Public Sub DrawPoint(X As Double, Y As Double, SeriesRef As Integer)
+        Dim i As Integer
         If Me.Chart.InvokeRequired Then
             'If you need to invoke then invoke.
-            consolePrint("DrawPoint(" + X.ToString + ", " + Y.ToString + ") Invoked", True)
+            'consolePrint("DrawPoint(" + X.ToString + ", " + Y.ToString + ") Invoked", True)
             Me.Chart.Invoke(New DrawPointInvoker(AddressOf DrawPoint), X, Y, SeriesRef)
         Else
             'Add the points
-            consolePrint("HANDLE: " + Me.Chart.IsHandleCreated.ToString + "; " + Me.Chart.Handle.ToString, True)
-            Me.Chart.Series(SeriesRef).Points.AddXY(X, Y)
+            'consolePrint("HANDLE: " + Me.Chart.IsHandleCreated.ToString + "; " + Me.Chart.Handle.ToString, True)
+            i = Me.Chart.Series(SeriesRef).Points.AddXY(X, Y)
 
             'I cant be bothered to write another Delegate for the labels so I'm doin' it here!
             If SeriesRef = 0 Then
-                Me.SWRLabel.Text = "SWR: " + Y.ToString
+                Me.SWRLabel.Text = "SWR: " + Y.ToString("n2")
+            End If
+            If SeriesRef = 2 Then
+                Me.V1Label.Text = "V1: " + Y.ToString("n3")
+            End If
+            If SeriesRef = 3 Then
+                Me.V2Label.Text = "V2: " + Y.ToString("n3")
+            End If
+            If SeriesRef = 4 Then
+                Me.V3Label.Text = "V3: " + Y.ToString("n3")
             End If
             Me.Frequency.Text = X.ToString * 1000000
 
-            consolePrint("ChartPoints: " + Chart.Series(SeriesRef).Points.Count().ToString + "Last point:" + Chart.Series(SeriesRef).Points(Chart.Series(SeriesRef).Points.Count - 1).XValue.ToString + ";" + Chart.Series(SeriesRef).Points(Chart.Series(SeriesRef).Points.Count - 1).YValues(0).ToString, True)
+            'consolePrint("ChartPoints: " + i.ToString + " Last point:" + Chart.Series(SeriesRef).Points(i).XValue.ToString + ", " + Chart.Series(SeriesRef).Points(i).YValues(0).ToString("n3"))
+        End If
+    End Sub
+    Public Sub setChartToolTips()
+        If Me.Chart.InvokeRequired Then
+            Me.Chart.Invoke(New setTooltipsInvoker(AddressOf setChartToolTips))
+        Else
+            Me.Chart.Series(0).ToolTip = "SWR = #VALX, #VALY"
+            Me.Chart.Series(0).LegendText = "SWR"
+            Me.Chart.Series(1).ToolTip = "R = #VALX, #VALY"
+            Me.Chart.Series(1).LegendText = "R"
+            Me.Chart.Series(2).ToolTip = "V1 Source = #VALX, #VALY"
+            Me.Chart.Series(2).LegendText = "V1 - Source"
+            Me.Chart.Series(3).ToolTip = "V2 Current = #VALX, #VALY"
+            Me.Chart.Series(3).LegendText = "V2 - Current"
+            Me.Chart.Series(4).ToolTip = "V3 Load = #VALX, #VALY"
+            Me.Chart.Series(4).LegendText = "V3 Load"
+            Me.Chart.Series(5).ToolTip = "Power = #VALX, #VALY"
+            Me.Chart.Series(5).LegendText = "Power"
+            Me.ShowR_CheckBox.Checked = True
+            Me.Chart.Series(0).Enabled = True
+            Me.Chart.Series(1).Enabled = True
+            Me.ShowV_CheckBox.Checked = False
+            Me.Chart.Series(2).Enabled = False
+            Me.Chart.Series(3).Enabled = False
+            Me.Chart.Series(4).Enabled = False
+            Me.ShowP_CheckBox.Checked = False
+            Me.Chart.Series(5).Enabled = False
+            Me.Chart.Series(6).Enabled = False
         End If
     End Sub
     Public Sub Read(ByVal sender As Object, ByVal e As DoWorkEventArgs)
@@ -147,7 +187,7 @@ Public Class MainForm
         End While
     End Sub
     Public Sub Parse(input As String)
-        consolePrint("PARSING: " + input, True)
+        'consolePrint("PARSING: " + input, True)
         Try
             'Basic parse variables
             Dim P_command As String
@@ -155,8 +195,11 @@ Public Class MainForm
 
             'Parse variables for Data return
             Dim P_freq As String
+            Dim P_Mhz As Double
             Dim P_V1 As Double
             Dim P_V2 As Double
+            Dim P_V3 As Double
+            Dim P_V4 As Double
             Dim P_Rx As Double
             Dim P_SWR As Double
 
@@ -169,19 +212,31 @@ Public Class MainForm
             '"Send Data for Freq" Command
             If P_command = "D " Then
                 P_freq = P_params(0)
-                P_V1 = P_params(1)
-                P_V2 = P_params(2)
-                P_Rx = (P_V2 * 47) / (P_V1 - P_V2)
+                P_V1 = P_params(1)      ' Voltage into bridge
+                P_V2 = P_params(2)      ' Voltage accross Resistor
+                P_V3 = P_params(3)      ' Voltage accross load
+                P_V4 = P_params(4)      ' From AD8307 power port
+                P_Rx = (P_V3 * 51) / (P_V1 - P_V3)      '  Simple calc
                 If P_Rx >= 50 Then
                     P_SWR = P_Rx / 50
                 Else
                     P_SWR = 50 / P_Rx
                 End If
-                consolePrint("PARSED: SWR: " + P_SWR.ToString + " Freq: " + P_freq.ToString, True)
-                If Not P_SWR > 20 Then
-                    DrawPoint(P_freq / 1000000, P_SWR, 0)
-                    DrawPoint(P_freq / 1000000, P_Rx, 1)
+                P_Mhz = P_freq / 1000000
+                consolePrint("PARSED: SWR: " + P_SWR.ToString("n2") + " Freq: " + P_freq.ToString + " ADC1: " + P_V1.ToString + ", ADC2: " + P_V2.ToString + ", ADC3: " + P_V3.ToString + ", ADC4: " + P_V4.ToString)
+                If Not tooltipsSet Then
+                    setChartToolTips()
+                    tooltipsSet = True
                 End If
+                'If Not P_SWR > 20 Then
+                DrawPoint(P_Mhz, P_SWR, 0)
+                DrawPoint(P_Mhz, P_Rx, 1)
+                'End If
+                DrawPoint(P_Mhz, P_V1 * 1.1 / 1024, 2)
+                'Me.V1Label.Text = "V1=" & P_V1 & " :" & P_V1 * 1.1 / 1024
+                DrawPoint(P_Mhz, P_V2 * 1.1 / 1024, 3)
+                DrawPoint(P_Mhz, P_V3 * 1.1 / 1024, 4)
+                DrawPoint(P_Mhz, P_V4 * 1.1 / 1024, 5)
             ElseIf P_command = "PR" Then
                 Presets.Add(P_params)
                 consolePrint("Added preset " + P_params(0).ToString)
@@ -249,6 +304,20 @@ Public Class MainForm
         Chart.Printing.PrintPaint(e.Graphics, New Rectangle(0, 0, Chart.Width, Chart.Height)) ' draw the chart
         Dim s As String = vbCrLf & vbCrLf & "This is where you add the results and stuff"
         e.Graphics.DrawString(s, Me.Font, Brushes.Black, New Point(0, Chart.Height + 2)) ' draw the rest
+    End Sub
+
+    Private Sub ShowR_CheckBox_CheckStateChanged(sender As Object, e As EventArgs) Handles ShowR_CheckBox.CheckStateChanged
+        Me.Chart.Series(1).Enabled = Me.ShowR_CheckBox.Checked
+    End Sub
+
+    Private Sub ShowV_CheckBox_CheckStateChanged(sender As Object, e As EventArgs) Handles ShowV_CheckBox.CheckStateChanged, ShowP_CheckBox.CheckStateChanged
+        Me.Chart.Series(2).Enabled = Me.ShowV_CheckBox.Checked
+        Me.Chart.Series(3).Enabled = Me.ShowV_CheckBox.Checked
+        Me.Chart.Series(4).Enabled = Me.ShowV_CheckBox.Checked
+    End Sub
+
+    Private Sub ShowP_CheckBox_CheckStateChanged(sender As Object, e As EventArgs) Handles ShowP_CheckBox.CheckStateChanged
+        Me.Chart.Series(5).Enabled = Me.ShowP_CheckBox.Checked
     End Sub
 
 End Class
